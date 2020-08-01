@@ -1,3 +1,4 @@
+# A
 # i3 config file (v4)
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
@@ -21,8 +22,8 @@ bindsym $mod+n border normal
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font xft:URWGothic-Book 11
-
+font xft:URWGothic-Book 15
+font pango:FontAwesome
 # Use Mouse+$mod to drag floating windows
 floating_modifier $mod
 
@@ -36,7 +37,6 @@ bindsym $mod+Shift+q kill
 #bindsym $mod+d exec --no-startup-id dmenu_recency
 
 bindsym $mod+d exec rofi -dpi 135 -show-icons -theme custom-nord -lines 12 -padding 18 -width 60 -location 0 -show drun -sidebar-mode -columns
-
 
 # launch categorized menu
 bindsym $mod+z exec --no-startup-id morc_menu
@@ -287,13 +287,17 @@ bindsym $mod+9 exec --no-startup-id blurlock
 
 # Autostart applications
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec --no-startup-id nitrogen --restore; sleep 1; picom -b
+exec --no-startup-id nitrogen --restore; sleep 1; # picom -b
 #exec --no-startup-id manjaro-hello
 exec --no-startup-id nm-applet
 exec --no-startup-id xfce4-power-manager
 exec --no-startup-id pamac-tray
 exec --no-startup-id clipit
-exec --no-startup-id picom -b --respect-prop-shadow
+# picom
+exec_always --no-startup-id picom --experimental-backends --backend glx
+#exec_always --no-startup-id picom
+#exec --no-startup-id picom -b --respect-prop-shadow
+
 # exec --no-startup-id blueman-applet
 # exec_always --no-startup-id sbxkb
 exec --no-startup-id start_conky_maia
@@ -302,7 +306,7 @@ exec --no-startup-id xautolock -time 10 -locker blurlock
 exec_always --no-startup-id ff-theme-util
 exec_always --no-startup-id fix_xcursor
 exec_always discord
-
+# exec_always redshift
 # Color palette used for the terminal ( ~/.Xresources file )
 # Colors are gathered based on the documentation:
 # https://i3wm.org/docs/userguide.html#xresources
@@ -371,6 +375,11 @@ set $nord13  #EBCB8B
 set $nord14  #A3BE8C
 set $nord15  #B48EAD
 
+set $bgn-c    #2f343f
+set $acc-c    #5294e2
+set $txa-c    #f3f4f5
+set $txi-c    #676E7D
+set $bgu-c    #E53935
 
 bar {
 	i3bar_command i3bar
@@ -420,12 +429,12 @@ bindsym $mod+m bar mode toggle
 
 # Theme colors
 # class                   border  backgr. text    indic.   child_border
-  client.focused          #556064 #556064 #80FFF9 #FDF6E3
-  client.focused_inactive #2F3D44 #2F3D44 #1ABC9C #454948
-  client.unfocused        #2F3D44 #2F3D44 #1ABC9C #454948
-  client.urgent           #CB4B16 #FDF6E3 #1ABC9C #268BD2
-  client.placeholder      #000000 #0c0c0c #ffffff #000000
-  client.background       #2B2C2B
+    client.focused          $acc-c     $acc-c     $txa-c     $acc-c
+	client.unfocused        $bgn-c     $bgn-c     $txi-c     $bgn-c
+	client.focused_inactive $bgn-c     $bgn-c     $txi-c     $bgn-c
+	client.urgent           $bgu-c     $bgu-c     $txa-c     $bgu-c
+
+	for_window [class="^.*"] border pixel 2
 #client.focused          $base05 $base0D $base00 $base0D $base0C
 #client.focused_inactive $base01 $base01 $base05 $base03 $base01
 #client.unfocused        $base01 $base00 $base05 $base01 $base01
@@ -490,5 +499,6 @@ mode "$mode_gaps_outer" {
 }
 
 
-exec_always xinput --set-prop "SynPS/2 Synaptics TouchPad" "libinput Natural Scrolling Enabled" 1
-exec_always xinput --set-prop "SynPS/2 Synaptics TouchPad" "libinput Tapping Enabled" 1
+#exec_always xinput --set-prop "ELAN1200:00 04F3:309C Mouse" "libinput Natural Scrollin
+# Enabled" 1
+#exec_always xinput --set-prop "ELAN1200:00 04F3:309C Mouse" "libinput Tapping Enabled"
