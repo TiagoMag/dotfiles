@@ -116,7 +116,7 @@ font-2 = NotoEmoji Nerd Font:size=15;6
 
 modules-left = i3
 modules-center =
-modules-right = right7 padding7 player-mpris-tail right6 padding6 pulseaudio right5 memory cpu temperature right4 wlan eth right3 time date right2 updates battery power
+modules-right = right7 padding7 spotify right6 padding6 pulseaudio right5 memory cpu temperature right4 wlan eth right3 time date right2 battery right1 power
 
 ;tray-position = right
 ;tray-maxsize = 32
@@ -135,7 +135,7 @@ content = "%{T3}%{T-}"
 [module/right1]
 type = custom/text
 content = "%{T3}%{T-}"
-content-background = #242933
+content-background = ${colors.nord0}
 content-foreground = ${colors.nord10}
 
 [module/right2]
@@ -314,7 +314,9 @@ animation-charging-3 = 
 animation-charging-4 = 
 animation-charging-framerate = 500
 label-charging = %percentage%%
-label-charging-padding-right = ${paddings.outer}
+;label-charging-padding-right = ${paddings.outter}
+label-charging-padding-left = ${paddings.inner}
+
 
 format-full = <label-full>
 format-full-foreground = ${colors.nord14}
