@@ -56,7 +56,7 @@ dpi = 192
 height = 20
 fixed-center = true
 
-background = #00000000
+background = #242933
 foreground = ${colors.nord6}
 border-top-size = 0
 border-left-size = 0
@@ -68,8 +68,8 @@ font-2 = NotoEmoji Nerd Font:size=6;3
 
 modules-left = i3
 modules-center =
-modules-right = right7 padding7 player-mpris-tail right6 padding6 pulseaudio padding6 right5 memory cpu right4 wlan eth right3 time date right2 battery right1 power
 
+modules-right = right7 padding7 spotify right6 padding6 pulseaudio right5 memory cpu temperature right4 wlan eth right3 time date right2 battery right1 power
 ;modules-right = right7 padding7 player-mpris-tail right6 padding6 pulseaudio right5 memory cpu temperature right4 wlan eth right3 time date right2 updates battery power
 
 
