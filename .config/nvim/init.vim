@@ -1,220 +1,285 @@
-syntax on
-set nocompatible              " be iMproved, required
-filetype off                  " required
+call plug#begin('~/.vim/plugged')
+Plug 'mhartington/formatter.nvim'
+Plug 'honza/vim-snippets' 
+Plug 'ray-x/lsp_signature.nvim'
+Plug 'tpope/vim-surround'
+Plug 'rstacruz/vim-closer'
+Plug 'psliwka/vim-smoothie'
+Plug 'nvim-lua/completion-nvim'
+Plug 'nvim-lua/popup.nvim'
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'romgrk/barbar.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-telescope/telescope-fzy-native.nvim'
+Plug 'folke/trouble.nvim'
+Plug 'vim-airline/vim-airline'
+Plug 'hrsh7th/vim-vsnip'
+Plug 'hrsh7th/vim-vsnip-integ'
+Plug 'mhinz/vim-mix-format'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'neovim/nvim-lspconfig'
+Plug 'navarasu/onedark.nvim'
+Plug 'hrsh7th/nvim-compe'
+Plug 'elixir-lang/vim-elixir'
+Plug 'kyazdani42/nvim-tree.lua'
+Plug 'preservim/nerdtree'
+Plug 'blackcauldron7/surround.nvim'
+Plug 'ryanoasis/vim-devicons'
+call plug#end()
+let g:smoothie_enabled= 1
+set expandtab 
+let g:completion_enable_auto_popup = 0
+imap <silent> <c-ñ> <Plug>(completion_trigger)
+set noshowmode 
+let g:completion_enable_auto_signature = 0
+let g:onedark_style = 'cool'  " We need add the configs before colorscheme line
+colorscheme onedark
+syntax enable
+set splitbelow                          " Horizontal splits will automatically be below
+set encoding=UTF-8
+set splitright                          " Vertical splits will automatically be to the right
+set rnu
+set clipboard+=unnamedplus
+set noswapfile
+set nobackup
+set nowritebackup
+set noswapfile
+let mapleader=","
+let g:mix_format_on_save = 1
+" Find files using Telescope command-line sugar.
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
-let mapleader =","
 
-"if filereadable(expand("~/.vimrc_background"))
-"  let base16colorspace=256
-"  source ~/.vimrc_background
-"endif
-
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-
-"let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
-
-"Syntastic
-Plugin 'vim-syntastic/syntastic'
-
-"Complete
-"Plugin 'valloric/youcompleteme'
-Plugin 'ervandew/supertab'
-
-"Displays which mode you are on
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-
-"GODS PLUGIN
-Plugin 'cohama/lexima.vim'
-Plugin 'tpope/vim-surround'
-
-"Haskell highlight
-Plugin 'neovimhaskell/haskell-vim', {'for': ['haskell', 'hs']}
-
-"Elixir highlight
-Plugin 'elixir-lang/vim-elixir'
-
-"i3 highlight
-Plugin 'potatoesmaster/i3-vim-syntax'
-
-"Fuzzy file finder
-Plugin 'kien/ctrlp.vim'
-Plugin 'powerline/fonts'
-
-Plugin 'morhetz/gruvbox'
-Plugin 'octol/vim-cpp-enhanced-highlight', {'for': ['cpp', 'c']}
-
-Plugin 'scrooloose/nerdtree'
-Plugin 'gyim/vim-boxdraw'
-Plugin 'tpope/vim-commentary'
-Plugin 'tpope/vim-fugitive'
-Plugin 'dag/vim2hs'
-
-call vundle#end()
-
-set bg=dark
-colorscheme gruvbox
-
-filetype plugin indent on
-set termguicolors
-set number                  " Enable line numbers.
-set numberwidth=5           " width of numbers line (default on gvim is 4)
-set rnu                     " Set relative number
-set report=0                " Show all changes.
-set showmode                " Show the current mode.
-set showcmd                 " show partial command on last line of screen.
-set showmatch               " show matching parenthesis
-set splitbelow splitright   " how to split new windows.
-set title                   " Show the filename in the window title bar.
-set hlsearch
-set ignorecase              " Ignores case sensitive cases when searching
-set undofile
-
-set scrolloff=5             " Start scrolling n lines before horizontal
-"   border of window.
-set sidescrolloff=7         " Start scrolling n chars before end of screen.
-set sidescroll=1            " The minimal number of columns to scroll
-"   horizontally.
-set wildmenu                " Hitting TAB in command mode will
-set wildchar=<TAB>          "   show possible completions.
-set wildmode=list:longest
-set wildignore+=*.DS_STORE,*.db,node_modules/**,*.jpg,*.png,*.gif
-
-set expandtab                   " Expand tabs to spaces
-set autoindent smartindent      " auto/smart indent
-set copyindent                  " copy previous indentation on auto indent
-set softtabstop=2               " Tab key results in # spaces
-set tabstop=2                   " Tab is # spaces
-set shiftwidth=4                " The # of spaces for indenting.
-set smarttab                    " At start of line, <Tab> inserts shift width
-
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-set guicursor=                  " Enable block cursor in nvim
-
-" gvim and xsel needed
-inoremap <C-v> <ESC>"+pa
-vnoremap <C-c> "+y
-vnoremap <C-x> "+d
-
-"Airline config
-let g:airline_theme='deus'
+" air-line
 let g:airline_powerline_fonts = 1
-let g:airline_section_z=''
-let g:airline_section_error=''
-let g:airline_section_warning=''
-let g:airline_section_gutter=''
-let g:airline_skip_empty_sections = 1
-let g:airline_section_x=''
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#show_buffers = 0
-let g:airline#extensions#tabline#show_splits = 0
-let g:airline#extensions#tabline#show_tabs = 1
-let g:airline#extensions#tabline#show_tab_count = 0
-let g:airline#extensions#tabline#formatter = 'unique_tail'
-let g:bufferline_echo = 0
-let g:airline#extensions#tabline#tab_nr_type = 1
+
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
 
 
-"Syntastic config
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
-let g:syntastic_error_symbol = "✗"
-let g:syntastic_loc_list_height=5
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': [] }
-map <leader>w :SyntasticCheck<CR>
-map <leader>e :SyntasticReset<CR>
-nnoremap <C-w>E :SyntasticCheck<CR> :SyntasticToggleMode<CR>
 
-"Tabular
-let g:tabular_loaded = 1
+let g:dashboard_default_executive ='telescope'
+nmap <Leader>ss :<C-u>SessionSave<CR>
+nmap <Leader>sl :<C-u>SessionLoad<CR>
+nnoremap <silent> <Leader>fh :DashboardFindHistory<CR>
+nnoremap <silent> <Leader>ff :DashboardFindFile<CR>
+nnoremap <silent> <Leader>tc :DashboardChangeColorscheme<CR>
+nnoremap <silent> <Leader>fa :DashboardFindWord<CR>
+nnoremap <silent> <Leader>fb :DashboardJumpMark<CR>
+nnoremap <silent> <Leader>cn :DashboardNewFile<CR>
 
-"Save with Ctrl-S
-noremap  <silent> <C-S>         :w<CR>
-vnoremap <silent> <C-S>         <ESC>:w<ESC><CR>
-inoremap <silent> <C-S>         <ESC>:w<CR>
 
-" Quick quit command
-noremap <leader>q :quit<CR>
-noremap <leader>Q :qa!<CR>
+let g:UltiSnipsExpandTrigger="<tab>"
 
-" Automatically deletes all trailing whitespace on save.
-autocmd BufWritePre * %s/\s\+$//e
+" Using Lua functions
+nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
+nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
+nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
+nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> gD <cmd>lua vim.lsp.buf.declaration()<CR>
+nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>
+nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+nnoremap <silent> <C-n> <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
+nnoremap <silent> <C-p> <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
+" NerdTree
+  map <C-z> :NERDTreeToggle<CR>
+  autocmd StdinReadPre * let s:std_in=1
+  autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+  autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
-" Keep terminals transparency
-hi Normal guibg=NONE ctermbg=NONE
+nnoremap <C-n> :NvimTreeToggle<CR>
+nnoremap <leader>r :NvimTreeRefresh<CR>
+nnoremap <leader>n :NvimTreeFindFile<CR>
+" NvimTreeOpen and NvimTreeClose are also available if you need them
+"
+set tabstop=2                           " Insert 2 spaces for a tab
+set shiftwidth=2                        " Change the number of space characters inserted for indentation
+set softtabstop=2                       " Tab key results in # spaces
+set smarttab                            " Makes tabbing smarter will realize you have 2 vs 4
+	
 
+set termguicolors " this variable must be enabled for colors to be applied properly
+
+" a list of groups can be found at `:help nvim_tree_highlight`
+highlight NvimTreeFolderIcon guibg=blue
+
+
+" a list of groups can be found at `:help nvim_tree_highlight`
+autocmd BufWritePre *.jsx lua vim.lsp.buf.formatting_sync(nil, 100)
+autocmd BufWritePre *.py lua vim.lsp.buf.formatting_sync(nil, 100)
 "  Scrolling tabs
-map <leader>1 1gt
-map <leader>2 2gt
-map <leader>3 3gt
-map <leader>4 4gt
-map <leader>5 5gt
-map <leader>6 6gt
-map <leader>7 7gt
-map <leader>8 8gt
-map <leader>9 9gt
-map <leader>0 10gt
-map <leader>t :tabnew<CR>
+map <leader>tn :tabnew<CR>
+nnoremap <silent>    <A-1> :BufferGoto 1<CR>
+nnoremap <silent>    <A-2> :BufferGoto 2<CR>
+nnoremap <silent>    <A-3> :BufferGoto 3<CR>
+nnoremap <silent>    <A-4> :BufferGoto 4<CR>
+nnoremap <silent>    <A-5> :BufferGoto 5<CR>
+nnoremap <silent>    <A-6> :BufferGoto 6<CR>
+nnoremap <silent>    <A-7> :BufferGoto 7<CR>
+nnoremap <silent>    <A-8> :BufferGoto 8<CR>
+nnoremap <silent>    <A-9> :BufferLast<CR>
+noremap <silent> <C-S>          :update<CR>
+vnoremap <silent> <C-S>         <C-C>:update<CR>
+inoremap <silent> <C-S>         <C-O>:update<CR>
 nnoremap <leader>n <esc>:tabprevious<CR>
 nnoremap <leader>m <esc>:tabnext<CR>
-
-" Press Space to turn off highlighting and clear any message already displayed.
 nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
-
-" Easier way to move between splits
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
-
+nnoremap <silent>    <A-c> :BufferClose<CR>
+lua << EOF
+require"surround".setup{}
+EOF
 " NerdTree
 map <C-z> :NERDTreeToggle<CR>
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+lua << EOF
+vim.o.completeopt = "menuone,noselect"
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+require'compe'.setup {
+  enabled = true;
+  autocomplete = true;
+  debug = false;
+  min_length = 1;
+  preselect = 'enable';
+  throttle_time = 80;
+  source_timeout = 200;
+  incomplete_delay = 400;
+  max_abbr_width = 100;
+  max_kind_width = 100;
+  max_menu_width = 100;
+  documentation = false;
 
-" Unbind arrow keys
-noremap <Up> <Nop>
-noremap <Down> <Nop>
-noremap <Left> <Nop>
-noremap <Right> <Nop>
+  source = {
+    path = true;
+    buffer = true;
+    calc = true;
+    vsnip = true;
+    nvim_lsp = true;
+    nvim_lua = true;
+    spell = true;
+    tags = true;
+    snippets_nvim = true;
+    treesitter = true;
+  };
+}
+local t = function(str)
+  return vim.api.nvim_replace_termcodes(str, true, true, true)
+end
 
-" easier moving of code blocks
-vnoremap < <gv  " better indentation
-vnoremap > >gv  " better indentation
+local check_back_space = function()
+    local col = vim.fn.col('.') - 1
+    if col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
+        return true
+    else
+        return false
+    end
+end
 
-" map sort function to a key
-vnoremap <Leader>s :sort<CR>
+-- Use (s-)tab to:
+--- move to prev/next item in completion menuone
+--- jump to prev/next snippet's placeholder
+_G.tab_complete = function()
+  if vim.fn.pumvisible() == 1 then
+    return t "<C-n>"
+  elseif vim.fn.call("vsnip#available", {1}) == 1 then
+    return t "<Plug>(vsnip-expand-or-jump)"
+  elseif check_back_space() then
+    return t "<Tab>"
+  else
+    return vim.fn['compe#complete']()
+  end
+end
 
-" disable backup and swap files
-set nobackup
-set nowritebackup
-set noswapfile
+vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
+vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
+vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+EOF
+" Use <Tab> and <S-Tab> to navigate through popup menu
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
-" Resize splits
-nnoremap <leader>- :vertical resize -5<CR>
-nnoremap <leader>+ :vertical resize +5<CR>
-nnoremap <leader>_ :resize -5<CR>
-nnoremap <leader>* :resize +5<CR>
+" Set completeopt to have a better completion experience
+set completeopt=menuone,noinsert,noselect
 
-" Navigating with guides
-inoremap <leader><Tab> <Esc>/<++><Enter>"_c4l
-vnoremap <leader><Tab> <Esc>/<++><Enter>"_c4l
-map <leader><Tab> <Esc>/<++><Enter>"_c4l
+" Avoid showing message extra message when using completion
+set shortmess+=c
 
-" Latex bindings
-autocmd FileType tex map <F10> :silent !pdflatex % && start %:r.pdf<CR>
-autocmd FileType tex inoremap ,em \emph{}<++><Esc>T{i
-autocmd FileType tex inoremap ,bf \textbf{}<++><Esc>T{i
-autocmd FileType tex inoremap ,it \textit{}<++><Esc>T{i
+lua << EOF
+require'lspconfig'.elixirls.setup{on_attach=require'completion'.on_attach}
+require'lspconfig'.pylsp.setup{}
+require'lspconfig'.pyright.setup{}
+
+EOF
+
+lua << EOF
+local lsp_signature = require'completion'.on_attach 
+require'lspconfig'.elixirls.setup{
+	cmd = { "/home/tiago/.config/elixir-ls/language_server.sh" },
+	on_attach = lsp_signature
+}
+EOF
+
+lua << EOF
+  require("trouble").setup {
+    -- your configuration comes here
+    -- or leave it empty to use the default settings
+    -- refer to the configuration section below
+  }
+EOF
+
+lua << EOF
+require"lspconfig".efm.setup({
+  capabilities = capabilities,
+  on_attach = on_attach,
+  filetypes = {"elixir", "python"}
+})
+
+EOF
+" Format 
+lua << EOF
+require('formatter').setup({
+  logging = false,
+  filetype = {
+    javascript = {
+        -- prettier
+       function()
+          return {
+            exe = "prettier",
+            args = {"--stdin-filepath", vim.api.nvim_buf_get_name(0), '--single-quote'},
+            stdin = true
+          }
+        end
+    },
+    python = {
+      -- Rustfmt
+      function()
+        return {
+          exe = "black",
+          args = {"--quiet","--safe",vim.api.nvim_buf_get_name(0)},
+          stdin = false
+        }
+      end
+    }
+  }
+})
+EOF
+lua << EOF
+vim.api.nvim_exec([[
+augroup FormatAutogroup
+  autocmd!
+  autocmd BufWritePost *.py FormatWrite
+augroup END
+]], true)
+EOF
